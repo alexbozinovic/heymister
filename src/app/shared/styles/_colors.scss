@@ -1,0 +1,67 @@
+// ── Base Colors ──
+$tobacco:    #A7663F;
+$dusty-rose: #C9827C;
+$old-gold:   #C79A3B;
+$deep-forest:#2F5D50;
+$denim-blue: #3F5FBF;
+$gray-base:  #6B6560; // warm-neutral gray to complement the palette
+
+// ── Shade Generator ──
+// Produces 50, 100–900 shades for a given color.
+// 500 = base. Lower = lighter (mixed with white). Higher = darker (mixed with black).
+@function shade($color, $level) {
+  @if $level == 50  { @return mix(white, $color, 95%); }
+  @if $level == 100 { @return mix(white, $color, 90%); }
+  @if $level == 200 { @return mix(white, $color, 70%); }
+  @if $level == 300 { @return mix(white, $color, 50%); }
+  @if $level == 400 { @return mix(white, $color, 25%); }
+  @if $level == 500 { @return $color; }
+  @if $level == 600 { @return mix(black, $color, 15%); }
+  @if $level == 700 { @return mix(black, $color, 30%); }
+  @if $level == 800 { @return mix(black, $color, 50%); }
+  @if $level == 900 { @return mix(black, $color, 70%); }
+  @return $color;
+}
+
+$shade-levels: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900;
+
+// ── CSS Custom Properties ──
+:root {
+  // — Tobacco (Primary Accent) —
+  @each $l in $shade-levels {
+    --color-tobacco-#{$l}: #{shade($tobacco, $l)};
+  }
+
+  // — Dusty Rose (Secondary Accent) —
+  @each $l in $shade-levels {
+    --color-dusty-rose-#{$l}: #{shade($dusty-rose, $l)};
+  }
+
+  // — Old Gold —
+  @each $l in $shade-levels {
+    --color-old-gold-#{$l}: #{shade($old-gold, $l)};
+  }
+
+  // — Deep Forest —
+  @each $l in $shade-levels {
+    --color-deep-forest-#{$l}: #{shade($deep-forest, $l)};
+  }
+
+  // — Denim Blue (Utility Accent) —
+  @each $l in $shade-levels {
+    --color-denim-blue-#{$l}: #{shade($denim-blue, $l)};
+  }
+
+  // — Gray Scale —
+  @each $l in $shade-levels {
+    --color-gray-#{$l}: #{shade($gray-base, $l)};
+  }
+
+  // Convenience aliases (base = 500)
+  --color-tobacco:    var(--color-tobacco-500);
+  --color-dusty-rose: var(--color-dusty-rose-500);
+  --color-old-gold:   var(--color-old-gold-500);
+  --color-deep-forest:var(--color-deep-forest-500);
+  --color-denim-blue: var(--color-denim-blue-500);
+  --color-gray:       var(--color-gray-500);
+}
